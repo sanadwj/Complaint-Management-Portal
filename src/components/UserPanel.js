@@ -1,15 +1,26 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const UserPanel = () => (
-  <div>
+const UserPanel = props => {
+  const { loggedInStatus } = props;
+  return (
     <div>
-      <h1>User</h1>
+      <div>
+        Status :
+        {' '}
+        {loggedInStatus}
+      </div>
+      <h3>user panel</h3>
     </div>
-    <div>
-      <h3>This is user panel</h3>
-    </div>
-  </div>
+  );
+};
 
-);
+UserPanel.propTypes = {
+  loggedInStatus: PropTypes.func,
+};
+
+UserPanel.defaultProps = {
+  loggedInStatus: null,
+};
 
 export default UserPanel;
