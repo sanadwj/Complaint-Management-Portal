@@ -1,12 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import UserPanel from './UserPanel';
 
-export default class App extends Component {
-  render() {
-    return (
-      <div className='app'>
-        <h1>DevCamp React Starter</h1>
-        <h2>React Redux Router</h2>
-      </div>
-    );
-  }
-}
+// eslint-disable-next-line react/prefer-stateless-function
+const App = () => (
+  <div className="app">
+    <Router>
+      <Switch>
+        <Route exact path="/" component={UserPanel} />
+      </Switch>
+    </Router>
+  </div>
+);
+
+export default App;
