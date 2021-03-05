@@ -35,7 +35,7 @@ const Registration = props => {
   // };
 
   const handleSubmit = e => {
-    axios.post('http://localhost:5000/registrations ', {
+    axios.post('http://localhost:5000/api/v1/registrations ', {
       user: {
         email: email.email,
         password: password.password,

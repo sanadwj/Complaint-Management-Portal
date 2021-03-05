@@ -20,7 +20,7 @@ const Login = props => {
   };
 
   const handleSubmit = e => {
-    axios.post('http://localhost:5000/sessions', {
+    axios.post('http://localhost:5000/api/v1/sessions', {
       user: {
         email: email.email,
         password: password.password,
