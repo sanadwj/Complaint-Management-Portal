@@ -1,6 +1,8 @@
+/* eslint react/prop-types: 0 */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { Form, Item, Button } from 'semantic-ui-react';
 
 const UserPanel = props => {
   const [state, setState] = useState(['title', 'body', 'status']);
@@ -67,18 +69,23 @@ const UserPanel = props => {
       [e.target.name]: e.target.value,
     });
   };
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="test"
-          name="title"
-          placeholder="Title"
-          value={title.title}
-          onChange={handleTitleChange}
-          required
-        />
-        <textarea
+    <div style={{ marginTop: 20 }} className="formContainer">
+      <Form onSubmit={handleSubmit} width={30}>
+        <Form.Field>
+          <label>Title</label>
+          <input
+            type="text"
+            name="title"
+            placeholder="Title"
+            value={title.title}
+            onChange={handleTitleChange}
+            required
+          />
+        </Form.Field>
+
+        <Form.TextArea
           type="textarea"
           name="body"
           placeholder="Your Issue:"
@@ -86,20 +93,32 @@ const UserPanel = props => {
           onChange={handleBodyChange}
           required
         />
-        <input
+
+        <Form.Checkbox
           type="checkbox"
           name="valid"
           value={!valid}
           onChange={handleValidChange}
           required
         />
-        <button type="submit">Submit</button>
-      </form>
+        <Button type="submit">Submit</Button>
+      </Form>
+      <br />
+      <hr />
+      <div style={{ marginTop: 20 }} className="formContainer">
+        <Item.Group>
+          <Item>
+            <Item.Content>
+              <Item.Meta>{state.id}</Item.Meta>
+              <Item.Header>{state.title}</Item.Header>
+              <Item.Description>
+                {state.body}
+              </Item.Description>
+              <Item.Extra>{state.status}</Item.Extra>
+            </Item.Content>
+          </Item>
+        </Item.Group>
 
-      <div>
-        <h1>
-          {state.title}
-        </h1>
       </div>
     </div>
   );

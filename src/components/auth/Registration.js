@@ -1,6 +1,7 @@
 /* eslint react/prop-types: 0 */
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Button, Form } from 'semantic-ui-react';
 
 const Registration = props => {
   const { handleLogin } = props;
@@ -47,7 +48,6 @@ const Registration = props => {
       },
     }, { withCredentials: true }).then(res => {
       if (res.data.status === 200) {
-        // eslint-disable-next-line react/prop-types
         handleSuccess(res.data);
       }
     }).catch(error => {
@@ -56,34 +56,43 @@ const Registration = props => {
     e.preventDefault();
   };
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={email.email}
-          onChange={handleEmailChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={password.password}
-          onChange={handlePasswordChange}
-          required
-        />
-        <input
-          type="password"
-          name="password_confirmation"
-          placeholder="Password Confirmation"
-          value={confirmation.password_confirmation}
-          onChange={handleConfirmationChange}
-          required
-        />
-        <button type="submit">Register</button>
-      </form>
+    <div style={{ marginTop: 20 }} className="formContainer">
+      <Form onSubmit={handleSubmit}>
+        <Form.Field>
+          <label>Email</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={email.email}
+            onChange={handleEmailChange}
+            required
+          />
+        </Form.Field>
+        <Form.Field>
+          <label>Password</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={password.password}
+            onChange={handlePasswordChange}
+            required
+          />
+        </Form.Field>
+        <Form.Field>
+          <label>Password Confirmation</label>
+          <input
+            type="password"
+            name="password_confirmation"
+            placeholder="Password Confirmation"
+            value={confirmation.password_confirmation}
+            onChange={handleConfirmationChange}
+            required
+          />
+        </Form.Field>
+        <Button type="submit">Register</Button>
+      </Form>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -25,11 +25,9 @@ const NavBar = props => {
   const navBar = loggedInStatus === 'LOGGED_IN' ? (
     <div>
       <Menu pointing secondary size="massive" color="violet">
-        {/* <Menu.Item name={user.username} active as={Link} to="/" /> */}
-
         <Menu.Menu position="right">
           <Menu.Item name="logout" as={Link} to="/">
-            <button type="button" onClick={() => handleLogoutClick()}>Logout</button>
+            <Button type="button" onClick={() => handleLogoutClick()}>Logout</Button>
           </Menu.Item>
         </Menu.Menu>
       </Menu>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Item, Select, Button } from 'semantic-ui-react';
 
 const Admin = () => {
   const selects = ['resolved', 'dismissed'];
@@ -37,33 +38,36 @@ const Admin = () => {
   }, [status]);
 
   return (
-    <div>
-      <h1>
-        HI:
-        {' '}
-        {state.map(s => (
-          // eslint-disable-next-line react/jsx-key
-          <div>
-            <span>{s.user_id}</span>
-            <span>{s.title}</span>
-            <span>{s.body}</span>
-            <span>{s.status}</span>
+    <div style={{ marginTop: 20 }} className="formContainer">
+      <h1>Admin Page</h1>
+      <Item.Group style={{ marginTop: 20 }}>
+        <Item>
 
-            <select value={status.value} onChange={handleStatusChange}>
-              <option>Select</option>
-              {selects.map(select => (
-                <option
-                  key={select}
-                  value={select}
-                >
-                  {select}
-                </option>
-              ))}
-            </select>
-            <button type="button" onClick={() => updateData(s.id)}>Update</button>
-          </div>
-        ))}
-      </h1>
+          {' '}
+          {state.map(s => (
+          // eslint-disable-next-line react/jsx-key
+            <Item.Content style={{ marginTop: 20 }}>
+              <Item.Meta>{s.user_id}</Item.Meta>
+              <Item.Header>{s.title}</Item.Header>
+              <Item.Description>{s.body}</Item.Description>
+              <Item.Extra>{s.status}</Item.Extra>
+
+              <select value={status.value} onChange={handleStatusChange}>
+                <option>Select</option>
+                {selects.map(select => (
+                  <option
+                    key={select}
+                    value={select}
+                  >
+                    {select}
+                  </option>
+                ))}
+              </select>
+              <Button type="button" onClick={() => updateData(s.id)}>Update</Button>
+            </Item.Content>
+          ))}
+        </Item>
+      </Item.Group>
     </div>
   );
 };

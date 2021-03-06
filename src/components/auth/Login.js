@@ -1,8 +1,9 @@
+/* eslint react/prop-types: 0 */
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Button, Checkbox, Form } from 'semantic-ui-react';
 
 const Login = props => {
-  // eslint-disable-next-line react/prop-types
   const { handleLogin } = props;
   const [email, setEmail] = useState({ email: '' });
   const [password, setPassword] = useState({ password: '' });
@@ -23,13 +24,10 @@ const Login = props => {
     handleLogin(data);
     console.log(data);
     if (data.user.admin === true) {
-      // eslint-disable-next-line react/prop-types
       props.history.push('/admin');
     } else if (data.logged_in === true && data.user.admin === false) {
-      // eslint-disable-next-line react/prop-types
       props.history.push('/user-panel');
     } else {
-      // eslint-disable-next-line react/prop-types
       props.history.push('/');
     }
   };
@@ -43,7 +41,6 @@ const Login = props => {
     }, { withCredentials: true }).then(res => {
       console.log(res);
       if (res.data.status === 200) {
-        // eslint-disable-next-line react/prop-types
         handleSuccess(res.data);
       }
     }).catch(error => {
@@ -52,26 +49,32 @@ const Login = props => {
     e.preventDefault();
   };
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={email.email}
-          onChange={handleEmailChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={password.password}
-          onChange={handlePasswordChange}
-          required
-        />
-        <button type="submit">Login</button>
-      </form>
+    <div style={{ marginTop: 20 }} className="formContainer">
+      <Form onSubmit={handleSubmit}>
+        <Form.Field>
+          <label>Email</label>
+          <Form.Input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={email.email}
+            onChange={handleEmailChange}
+            required
+          />
+        </Form.Field>
+        <Form.Field>
+          <label>Password</label>
+          <Form.Input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={password.password}
+            onChange={handlePasswordChange}
+            required
+          />
+        </Form.Field>
+        <Button type="submit">Login</Button>
+      </Form>
     </div>
   );
 };
