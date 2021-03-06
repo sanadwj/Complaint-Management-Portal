@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-// eslint-disable-next-line no-unused-vars
 const Login = props => {
+  // eslint-disable-next-line react/prop-types
+  const { handleLogin } = props;
   const [email, setEmail] = useState({ email: '' });
-
   const [password, setPassword] = useState({ password: '' });
 
   const handleEmailChange = e => {
@@ -19,6 +19,21 @@ const Login = props => {
     });
   };
 
+  const handleSuccess = data => {
+    handleLogin(data);
+    console.log(data);
+    if (data.user.admin === true) {
+      // eslint-disable-next-line react/prop-types
+      props.history.push('/admin');
+    } else if (data.logged_in === true && data.user.admin === false) {
+      // eslint-disable-next-line react/prop-types
+      props.history.push('/user-panel');
+    } else {
+      // eslint-disable-next-line react/prop-types
+      props.history.push('/');
+    }
+  };
+
   const handleSubmit = e => {
     axios.post('http://localhost:5000/api/v1/sessions', {
       user: {
@@ -26,9 +41,10 @@ const Login = props => {
         password: password.password,
       },
     }, { withCredentials: true }).then(res => {
+      console.log(res);
       if (res.data.status === 200) {
         // eslint-disable-next-line react/prop-types
-        props.handleSuccess(res.data);
+        handleSuccess(res.data);
       }
     }).catch(error => {
       console.log('error', error);

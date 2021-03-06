@@ -1,14 +1,12 @@
+/* eslint react/prop-types: 0 */
 import React, { useState } from 'react';
 import axios from 'axios';
 
 const Registration = props => {
+  const { handleLogin } = props;
   const [email, setEmail] = useState({ email: '' });
-
   const [password, setPassword] = useState({ password: '' });
-
   const [confirmation, setConfirmation] = useState({ password_confirmation: '' });
-
-  // const [error, setError] = useState({ registrationErrors: '' });
 
   const handleEmailChange = e => {
     setEmail({
@@ -28,11 +26,17 @@ const Registration = props => {
     });
   };
 
-  // const handleErrorChange = e => {
-  //   setError({
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
+  const handleSuccess = data => {
+    handleLogin(data);
+    console.log(data.user);
+    if (data.user.admin === true) {
+      props.history.push('/admin');
+    } else if (data.status === 200 && data.user.admin === false) {
+      props.history.push('/user-panel');
+    } else {
+      props.history.push('/');
+    }
+  };
 
   const handleSubmit = e => {
     axios.post('http://localhost:5000/api/v1/registrations ', {
@@ -44,7 +48,7 @@ const Registration = props => {
     }, { withCredentials: true }).then(res => {
       if (res.data.status === 200) {
         // eslint-disable-next-line react/prop-types
-        props.handleSuccess(res.data);
+        handleSuccess(res.data);
       }
     }).catch(error => {
       console.log('error', error);
