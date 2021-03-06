@@ -17,7 +17,6 @@ const UserPanel = props => {
     handleLogin(data);
   };
 
-  console.log(state);
   const handleSubmit = e => {
     axios.post('http://localhost:5000/api/v1/complaints ', {
       complaint: {
@@ -41,8 +40,9 @@ const UserPanel = props => {
 
   const getData = () => {
     axios.get(`http://localhost:5000/api/v1/complaints/${user.id}`, { withCredentials: true }).then(res => {
-      console.log(res);
-      setState(res.data.complaint);
+      if (user.id === res.data.complaint.user_id) {
+        setState(res.data.complaint);
+      }
     }).catch(error => {
       console.log(error);
     });
