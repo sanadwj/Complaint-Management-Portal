@@ -59,6 +59,9 @@ PWC Assignment for a Software Engineer Position
 
 
 
+
+
+
 <!-- GETTING STARTED -->
 ## Getting Started
 
@@ -83,15 +86,25 @@ git clone git@github.com:sanadwj/Complaint-Management-Portal.git
 ```sh
 git checkout development
 ```
-2. Install NPM packages
+
+3. Install NPM packages
+
 ```sh
 npm install
 ```
 
-3. Run:
+4. Run:
+
 ```
 npm start
 ```
+
+
+5. Admin User:
+
+email: `pwc@admin.com`
+password: `pwc.admin`
+
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
