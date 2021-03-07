@@ -2,10 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { Form, Item, Button } from 'semantic-ui-react';
+import {
+  Form, Card, Icon, Button,
+} from 'semantic-ui-react';
 
 const UserPanel = props => {
-  const [state, setState] = useState(['title', 'body', 'status']);
+  const [state, setState] = useState([]);
+  const [newState, setNewState] = useState([]);
   const [title, setTitle] = useState({ title: '' });
   const [body, setBody] = useState({ body: '' });
   const [valid, setValid] = useState(false);
@@ -18,7 +21,7 @@ const UserPanel = props => {
   };
 
   const handleSubmit = e => {
-    axios.post('http://localhost:5000/api/v1/complaints ', {
+    axios.post('http://localhost:5000/api/v1/complaints', {
       complaint: {
         title: title.title,
         body: body.body,
@@ -27,10 +30,10 @@ const UserPanel = props => {
         status,
       },
     }, { withCredentials: true }).then(res => {
-      console.log('res', res);
       if (res.data.status === 200) {
         // eslint-disable-next-line react/prop-types
         handleSuccess(res.data);
+        setNewState(res.data.complaint);
       }
     }).catch(error => {
       console.log('error', error);
@@ -40,17 +43,14 @@ const UserPanel = props => {
 
   const getData = () => {
     axios.get(`http://localhost:5000/api/v1/complaints/${user.id}`, { withCredentials: true }).then(res => {
-      if (user.id === res.data.complaint.user_id) {
-        setState(res.data.complaint);
-      }
+      setState(res.data.complaint);
     }).catch(error => {
       console.log(error);
     });
   };
-
   useEffect(() => {
     getData();
-  }, []);
+  }, [status]);
 
   const handleTitleChange = e => {
     setTitle({
@@ -106,18 +106,17 @@ const UserPanel = props => {
       <br />
       <hr />
       <div style={{ marginTop: 20 }} className="formContainer">
-        <Item.Group>
-          <Item>
-            <Item.Content>
-              <Item.Meta>{state.id}</Item.Meta>
-              <Item.Header>{state.title}</Item.Header>
-              <Item.Description>
-                {state.body}
-              </Item.Description>
-              <Item.Extra>{state.status}</Item.Extra>
-            </Item.Content>
-          </Item>
-        </Item.Group>
+
+        {state.map(s => (
+          <Card key={s.id}>
+            <Card.Content header={s.title} />
+            <Card.Content description={s.body} />
+            <Card.Content extra>
+              <Icon />
+              {s.status}
+            </Card.Content>
+          </Card>
+        ))}
 
       </div>
     </div>
@@ -127,13 +126,13 @@ const UserPanel = props => {
 UserPanel.propTypes = {
   handleLogin: PropTypes.func,
   user: PropTypes.objectOf(PropTypes.string),
-  id: PropTypes.number,
+  id: PropTypes.string,
 };
 
 UserPanel.defaultProps = {
   handleLogin: null,
   user: '',
-  id: null,
+  id: '',
 };
 
 export default UserPanel;

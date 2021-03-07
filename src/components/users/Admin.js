@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Item, Select, Button } from 'semantic-ui-react';
+import {
+  Item, Button, Card, Icon,
+} from 'semantic-ui-react';
 
 const Admin = () => {
   const selects = ['resolved', 'dismissed'];
@@ -9,7 +11,6 @@ const Admin = () => {
 
   const getData = () => {
     axios.get('http://localhost:5000/api/v1/complaints', { withCredentials: true }).then(res => {
-      console.log(res.data.complaint.status);
       setState(res.data.complaint);
     }).catch(error => {
       console.log(error);
@@ -40,34 +41,38 @@ const Admin = () => {
   return (
     <div style={{ marginTop: 20 }} className="formContainer">
       <h1>Admin Page</h1>
-      <Item.Group style={{ marginTop: 20 }}>
-        <Item>
 
-          {' '}
-          {state.map(s => (
-          // eslint-disable-next-line react/jsx-key
-            <Item.Content style={{ marginTop: 20 }}>
-              <Item.Meta>{s.user_id}</Item.Meta>
-              <Item.Header>{s.title}</Item.Header>
-              <Item.Description>{s.body}</Item.Description>
-              <Item.Extra>{s.status}</Item.Extra>
+      {' '}
+      {state.map(s => (
+        // eslint-disable-next-line react/jsx-key
+        <Card style={{ marginTop: 20 }}>
+          <Card.Content header={s.title} />
+          <Card.Content extra>
+            <Icon />
+            {s.user_id}
+          </Card.Content>
+          <Card.Content description={s.body} />
+          <Card.Content extra>
+            <Icon name="user" />
+            {s.status}
+          </Card.Content>
 
-              <select value={status.value} onChange={handleStatusChange}>
-                <option>Select</option>
-                {selects.map(select => (
-                  <option
-                    key={select}
-                    value={select}
-                  >
-                    {select}
-                  </option>
-                ))}
-              </select>
-              <Button type="button" onClick={() => updateData(s.id)}>Update</Button>
-            </Item.Content>
-          ))}
-        </Item>
-      </Item.Group>
+          <select value={status.value} onChange={handleStatusChange}>
+            <option>Select</option>
+            {selects.map(select => (
+              <option
+                key={select}
+                value={select}
+              >
+                {select}
+              </option>
+            ))}
+          </select>
+          <Button type="button" onClick={() => updateData(s.id)}>Update</Button>
+        </Card>
+
+      ))}
+
     </div>
   );
 };
