@@ -1,5 +1,5 @@
 # Notice: 
-- I just Seed the database please `git checkout v1-branch` instead of development I also edit a query and add some style for front end you can check the commit history
+- I just Seed the database please `git checkout v1-client-branch` instead of development I also edit a query and add some style for front end you can check the commit history
 
 ## Complaint Management Portal
 
